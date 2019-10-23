@@ -1,0 +1,1 @@
+python train.py -i /media/F/projects/datasets/DeepFashion/Category-and-Attribute-Prediction-Benchmark/
