@@ -13,8 +13,7 @@ def train(args):
     img_dir = Path(args.dir)
     data_df = load_file_list(img_dir)
     #print(data_df['dataset'].head(10))
-
-    data_df = data_df[:1000]
+    #data_df = data_df[:1000]
 
     data_source = (ImageList.from_df(df=data_df, path=img_dir, cols='images')
                    .split_by_idxs((data_df[data_df['dataset'] == 'train'].index), (data_df[data_df['dataset'] == 'val'].index))
@@ -33,13 +32,14 @@ def train(args):
     learner.model = learner.model.cuda()
     learner.lr_find()
 
-    #learner.fit_one_cycle(1, max_lr=1e-03, callbacks=[SaveModelCallback(learner, every='epoch', monitor='accuracy', name='./model')])
-    learner.fit_one_cycle(1, max_lr=1e-03)
+    learner.fit_one_cycle(args.epoch, max_lr=1e-03, callbacks=[SaveModelCallback(learner, every='improvement', monitor='accuracy', name='best_model')])
+    #learner.fit_one_cycle(args.epoch, max_lr=1e-03)
     learner.export()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="")
     parser.add_argument('-d', '--dir', type=str)
+    parser.add_argument('-e', '--epoch', type=int, default=10)
     args = parser.parse_args()
     print(args)
     train(args)

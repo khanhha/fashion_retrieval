@@ -3,7 +3,6 @@ from fastai.vision import *
 from fastai.callbacks import *
 from fastai.metrics import accuracy, top_k_accuracy
 
-
 def load_file_list(dir):
     with open(f'{dir}/Anno/list_category_cloth.txt') as file:
         categories = []

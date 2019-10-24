@@ -1,1 +1,1 @@
-python train.py -i /media/F/projects/datasets/DeepFashion/Category-and-Attribute-Prediction-Benchmark/
+python train.py -d /media/F/projects/datasets/DeepFashion/Category-and-Attribute-Prediction-Benchmark/
