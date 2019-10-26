@@ -1,6 +1,5 @@
 import argparse
 from util import load_file_list
-from pathlib import Path
 from fastai.vision import *
 
 if __name__ == "__main__":
@@ -16,10 +15,6 @@ if __name__ == "__main__":
                    .label_from_df(cols='category'))
     tmfs = get_transforms()
     data = data_source.transform(None, size=224).databunch(bs=32, num_workers=4).normalize(imagenet_stats)
-    for i in range(100):
-        data.show_batch(rows=3,figsize=(4,4))
-        plt.show()
-        plt.clf()
 
     learn = load_learner(args.dir)
     learn.data = data

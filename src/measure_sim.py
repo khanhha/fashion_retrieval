@@ -75,6 +75,7 @@ from tqdm import tqdm
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="")
     parser.add_argument('-d', '--dir', type=str)
+    parser.add_argument('-o', '--output_dir', type=str)
     args = parser.parse_args()
 
     img_dir = Path(args.dir)
@@ -91,7 +92,7 @@ if __name__ == '__main__':
                              .label_from_df(cols='category'))
 
     tmfs = get_transforms()
-    bs = 32
+    bs = 128
     inference_data = inference_data_source.transform(tmfs, size=224).databunch(bs=bs).normalize(imagenet_stats)
     inference_dataloader = inference_data.train_dl.new(shuffle=False)
 
@@ -144,6 +145,6 @@ if __name__ == '__main__':
         for i, ax in enumerate(axes.flatten()):
             img = plt.imread(imgs[i])
             ax.imshow(img)
-        dir = Path('/media/F/projects/datasets/DeepFashion/debug/sim_imgs/')
+        dir = Path(args.output_dir)
         plt.savefig(dir/Path(base_image).name, dpi=200)
         plt.clf()
